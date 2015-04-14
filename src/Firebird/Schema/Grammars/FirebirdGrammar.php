@@ -154,6 +154,21 @@ class FirebirdGrammar extends Grammar {
 
     return $sql;
   }
+
+  /**
+   * Compile a drop foreign key command.
+   *
+   * @param  \Illuminate\Database\Schema\Blueprint  $blueprint
+   * @param  \Illuminate\Support\Fluent  $command
+   * @return string
+   */
+  public function compileDropForeign(Blueprint $blueprint, Fluent $command)
+  {
+    $table = $this->wrapTable($blueprint);
+
+    return "alter table {$table} drop foreign key {$command->index}";
+  }
+
   /**
    * Get the SQL for a nullable column modifier.
    *
