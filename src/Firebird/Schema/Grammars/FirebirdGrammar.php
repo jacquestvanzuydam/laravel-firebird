@@ -45,8 +45,6 @@ class FirebirdGrammar extends Grammar {
 
     $sql = 'create table '.$this->wrapTable($blueprint)." ($columns)";
 
-    echo $sql;
-
     return $sql;
   }
 
