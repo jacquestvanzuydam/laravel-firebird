@@ -15,7 +15,10 @@ Install using composer:
 composer require jacquestvanzuydam/laravel-firebird
 ```
 
-Update the `app/config/app.php` file with the FirebirdServiceProvider.
+Update the `app/config/app.php`, add the service provider:
+```json
+'Firebird\FirebirdServiceProvider'.
+```
 
 You can remove the original DatabaseServiceProvider, as the original connection factory has also been extended.
 
