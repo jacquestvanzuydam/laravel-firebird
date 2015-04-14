@@ -1,0 +1,20 @@
+{
+    "name": "jacquestvanzuydam/laravel-firebird",
+    "description": "A Firebird database package for the Laravel Framework",
+    "license": "none",
+    "version": "1.0.0.0",
+    "authors": [
+        {
+            "name": "Jacques van Zuydam",
+            "email": "jtvanzuydam@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+      "php": ">=5.4.0",
+      "illuminate/support": "5.0.*",
+      "illuminate/container": "5.0.*",
+      "illuminate/database": "5.0.*",
+      "illuminate/events": "5.0.*"
+    }
+}
