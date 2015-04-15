@@ -166,7 +166,7 @@ class FirebirdGrammar extends Grammar {
   {
     $table = $this->wrapTable($blueprint);
 
-    return "alter table {$table} drop foreign key {$command->index}";
+    return "alter table {$table} drop constraint {$command->index}";
   }
 
   /**
