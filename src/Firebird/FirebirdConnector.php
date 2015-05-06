@@ -18,15 +18,7 @@ class FirebirdConnector extends Connector implements ConnectorInterface {
   {
     $options = $this->getOptions($config);
 
-    $path = realpath($config['database']);
-
-    // Here we'll verify that the Firebird database exists before going any further
-    // as the developer probably wants to know if the database exists and this
-    // Firebird driver will not throw any exception if it does not by default.
-    if ($path === false)
-    {
-      throw new InvalidArgumentException("Database does not exist.");
-    }
+    $path = $config['database'];
 
     $host = $config['host'];
     if ( empty($host))
