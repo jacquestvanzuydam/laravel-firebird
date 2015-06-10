@@ -26,11 +26,13 @@ Declare your connection in the database config, using 'firebird' as the
 connecion type.
 Other keys that are needed:
 ```php
-'driver' => 'firebird',
-'host' => env('DB_HOST', 'localhost'),
-'database' => env('DB_DATABASE','/storage/firebird/APPLICATION.FDB'),
-'username' => env('DB_USERNAME', 'sysdba'),
-'sysdbapassword' => env('DB_PASSWORD', 'masterkey'),
+'firebird' => [
+    'driver' => 'firebird',
+    'host' => env('DB_HOST', 'localhost'),
+    'database' => env('DB_DATABASE','/storage/firebird/APPLICATION.FDB'),
+    'username' => env('DB_USERNAME', 'sysdba'),
+    'password' => env('DB_PASSWORD', 'masterkey'),
+],
 ```
 
 This package is still in it's infancy and I wouldn't yet recommend using
