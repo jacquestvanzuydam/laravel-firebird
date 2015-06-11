@@ -66,7 +66,7 @@ class Connection extends \Illuminate\Database\Connection {
     // Check that the host and database are not empty
     if( ! empty($config['host']) && ! empty ($config['database']) )
     {
-      return 'firebird:dbname='.$config['host'].':'.$config['database'];
+      return 'firebird:dbname='.$config['host'].':'.$config['database'].';charset='.$config['charset'];
     }
     else
     {

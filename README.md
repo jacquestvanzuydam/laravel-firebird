@@ -27,13 +27,21 @@ connecion type.
 Other keys that are needed:
 ```php
 'firebird' => [
-    'driver' => 'firebird',
-    'host' => env('DB_HOST', 'localhost'),
+    'driver'   => 'firebird',
+    'host'     => env('DB_HOST', 'localhost'),
     'database' => env('DB_DATABASE','/storage/firebird/APPLICATION.FDB'),
     'username' => env('DB_USERNAME', 'sysdba'),
     'password' => env('DB_PASSWORD', 'masterkey'),
+    'charset'  => env('DB_CHARSET', 'UTF8'),
 ],
 ```
+
+And add to your .env
+```
+DB_CHARSET=UTF8
+```
+
+If necessary, change the UTF8 to any other charset
 
 This package is still in it's infancy and I wouldn't yet recommend using
 it for large projects, or without backing up your database regularly.
