@@ -83,7 +83,11 @@ class FirebirdGrammar extends Grammar {
    */
   public function compileUnique(Blueprint $blueprint, Fluent $command)
   {
-    return $this->compileKey($blueprint, $command, 'unique');
+    $columns = $this->columnize($command->columns);
+
+    $table = $this->wrapTable($blueprint);
+
+    return "CREATE UNIQUE INDEX ".strtoupper(substr($command->index, 0, 20))." ON {$table} ($columns)";
   }
 
   /**
@@ -95,7 +99,11 @@ class FirebirdGrammar extends Grammar {
    */
   public function compileIndex(Blueprint $blueprint, Fluent $command)
   {
-    return $this->compileKey($blueprint, $command, 'index');
+    $columns = $this->columnize($command->columns);
+
+    $table = $this->wrapTable($blueprint);
+
+    return "CREATE INDEX ".strtoupper(substr($command->index, 0, 20))." ON {$table} ($columns)";
   }
 
   /**
