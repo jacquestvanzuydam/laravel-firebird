@@ -15,9 +15,19 @@ Install using composer:
 composer require jacquestvanzuydam/laravel-firebird
 ```
 
+For Laravel 5.1 support use:
+```json
+composer require jacquestvanzuydam/laravel-firebird:dev-5.1-support
+```
+
 Update the `app/config/app.php`, add the service provider:
 ```json
 'Firebird\FirebirdServiceProvider'.
+```
+
+For Laravel 5.1:
+```php
+Firebird\FirebirdServiceProvider::class,
 ```
 
 You can remove the original DatabaseServiceProvider, as the original connection factory has also been extended.
