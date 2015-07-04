@@ -15,6 +15,8 @@ Install using composer:
 composer require jacquestvanzuydam/laravel-firebird
 ```
 
+**For Laravel 5.1.* support, please look at the [5.1-support](https://github.com/jacquestvanzuydam/laravel-firebird/tree/5.1-support) branch.**
+
 Update the `app/config/app.php`, add the service provider:
 ```json
 'Firebird\FirebirdServiceProvider'.
