@@ -143,7 +143,7 @@ class FirebirdGrammar extends Grammar {
 
     $onColumns = $this->columnize((array) $command->references);
 
-    $sql = "alter table {$table} add constraint ".strtoupper(substr($command->index, 0, 20))." ";
+    $sql = "alter table {$table} add constraint ".strtoupper(substr($command->index, 0, 31))." ";
 
     $sql .= "foreign key ({$columns}) references {$on} ({$onColumns})";
 
