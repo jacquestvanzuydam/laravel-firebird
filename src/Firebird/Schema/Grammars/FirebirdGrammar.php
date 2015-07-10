@@ -87,7 +87,7 @@ class FirebirdGrammar extends Grammar {
 
     $table = $this->wrapTable($blueprint);
 
-    return "CREATE UNIQUE INDEX ".strtoupper(substr($command->index, 0, 20))." ON {$table} ($columns)";
+    return "CREATE UNIQUE INDEX ".strtoupper(substr($command->index, 0, 31))." ON {$table} ($columns)";
   }
 
   /**
@@ -103,7 +103,7 @@ class FirebirdGrammar extends Grammar {
 
     $table = $this->wrapTable($blueprint);
 
-    return "CREATE INDEX ".strtoupper(substr($command->index, 0, 20))." ON {$table} ($columns)";
+    return "CREATE INDEX ".strtoupper(substr($command->index, 0, 31))." ON {$table} ($columns)";
   }
 
   /**
@@ -143,7 +143,7 @@ class FirebirdGrammar extends Grammar {
 
     $onColumns = $this->columnize((array) $command->references);
 
-    $sql = "alter table {$table} add constraint ".strtoupper(substr($command->index, 0, 20))." ";
+    $sql = "alter table {$table} add constraint ".strtoupper(substr($command->index, 0, 31))." ";
 
     $sql .= "foreign key ({$columns}) references {$on} ({$onColumns})";
 
