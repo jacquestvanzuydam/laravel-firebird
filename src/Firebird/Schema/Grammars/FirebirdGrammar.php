@@ -223,7 +223,7 @@ class FirebirdGrammar extends Grammar {
    */
   protected function typeString(Fluent $column)
   {
-    return 'VARCHAR (255)';
+    return 'VARCHAR ('.$column->length.')';
   }
 
   /**
