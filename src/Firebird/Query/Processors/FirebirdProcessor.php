@@ -26,4 +26,21 @@ class FirebirdProcessor extends Processor {
     return is_numeric($id) ? (int) $id : $id;
   }
 
+  /**
+   * Process the results of a column listing query.
+   *
+   * @param  array  $results
+   * @return array
+   */
+  public function processColumnListing($results)
+  {
+    $mapping = function ($r) {
+      $r = (object) $r;
+
+      return $r->{'RDB$FIELD_NAME'};
+    };
+
+    return array_map($mapping, $results);
+  }
+
 }
