@@ -166,6 +166,6 @@ class Connection extends \Illuminate\Database\Connection {
 
     $query = new Query\Builder($this, $this->getQueryGrammar(), $processor);
 
-    return $query->from('RDB$DATABASE')->select($this->raw('GEN_ID('.$sequenceName.', '. $increment .') AS BLKODU'))->first()->BLKODU;;
+    return $query->from('RDB$DATABASE')->select($this->raw('GEN_ID('.$sequenceName.', '. $increment .') AS BLKODU'))->first()->BLKODU;
   }
 }
