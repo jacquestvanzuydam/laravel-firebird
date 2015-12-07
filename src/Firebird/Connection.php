@@ -153,4 +153,19 @@ class Connection extends \Illuminate\Database\Connection {
 
     return $query->from($table);
   }
+
+ /**
+ * Get generator value
+ *
+ * @param  string  $sequenceName
+ * @return integer
+ */
+  public function genId($sequenceName, $increment = 1)
+  {
+    $processor = $this->getPostProcessor();
+
+    $query = new Query\Builder($this, $this->getQueryGrammar(), $processor);
+
+    return $query->from('RDB$DATABASE')->select(DB::raw('GEN_ID('.$sequenceName.', '. $increment .') AS BLKODU'))->first()->BLKODU;;
+  }
 }
