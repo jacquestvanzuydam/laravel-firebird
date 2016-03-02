@@ -83,20 +83,20 @@ class Connection extends \Illuminate\Database\Connection {
    */
   public function createConnection($dsn, array $config)
   {
-      //Check the username and password
-      if (!empty($config['username']) && !empty($config['password']))
-      {
-          try {
-              return new PDO($dsn, $config['username'], $config['password']);
-          } catch (PDOException $e) {
-              trigger_error($e->getMessage());
-          }
+    //Check the username and password
+    if (!empty($config['username']) && !empty($config['password']))
+    {
+      try {
+        return new PDO($dsn, $config['username'], $config['password']);
+      } catch (PDOException $e) {
+        trigger_error($e->getMessage());
       }
-      else
-      {
-          trigger_error('Cannot connect to Firebird Database, no username or password supplied');
-      }
-      return null;
+    }
+    else
+    {
+      trigger_error('Cannot connect to Firebird Database, no username or password supplied');
+    }
+    return null;
   }
 
   /**
@@ -152,5 +152,23 @@ class Connection extends \Illuminate\Database\Connection {
     $query = new Query\Builder($this, $this->getQueryGrammar(), $processor);
 
     return $query->from($table);
+  }
+
+  public function beginTransaction()
+  {
+    $this->pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, 0);
+    parent::beginTransaction();
+  }
+
+  public function commit()
+  {
+    parent::commit();
+    $this->pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, 1);
+  }
+
+  public function rollBack()
+  {
+    parent::rollBack();
+    $this->pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, 1);
   }
 }
