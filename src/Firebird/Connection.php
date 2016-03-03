@@ -156,19 +156,25 @@ class Connection extends \Illuminate\Database\Connection {
 
   public function beginTransaction()
   {
-    $this->pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, 0);
+    if ( $this->transactions == 0 && $this->pdo->getAttribute(PDO::ATTR_AUTOCOMMIT) == 1 ) {
+      $this->pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, 0);
+    }
     parent::beginTransaction();
   }
 
   public function commit()
   {
     parent::commit();
-    $this->pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, 1);
+    if ( $this->transactions == 0 && $this->pdo->getAttribute(PDO::ATTR_AUTOCOMMIT) == 0 ) {
+      $this->pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, 1);
+    }
   }
 
   public function rollBack()
   {
     parent::rollBack();
-    $this->pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, 1);
+    if ( $this->transactions == 0 && $this->pdo->getAttribute(PDO::ATTR_AUTOCOMMIT) == 0 ) {
+      $this->pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, 1);
+    }
   }
 }
