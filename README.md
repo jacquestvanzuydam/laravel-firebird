@@ -57,3 +57,5 @@ This package is still in it's infancy and I wouldn't yet recommend using
 it for large projects, or without backing up your database regularly.
 
 Any comments or contributions are welcome.
+
+Thanks to ```CyCJIeHok``` for the changes for Laravel 5.2
