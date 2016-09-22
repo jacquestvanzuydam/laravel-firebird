@@ -10,16 +10,15 @@ Install the Firebird PDO driver for PHP.
 Mariuz's Blog has a very good step by step on this:
 http://mapopa.blogspot.com/2009/04/php5-and-firebird-pdo-on-ubuntu-hardy.html
 
-Install using composer:
+
+For Laravel 5.3 support use:
 ```json
-composer require jacquestvanzuydam/laravel-firebird
+composer require jacquestvanzuydam/laravel-firebird:dev-5.3-support
 ```
 
 **For Laravel 5.1.* support, please look at the [5.1-support](https://github.com/jacquestvanzuydam/laravel-firebird/tree/5.1-support) branch.**
 
 **For Laravel 5.2.* support, please look at the [5.2-sup](https://github.com/jacquestvanzuydam/laravel-firebird/tree/5.2-sup) branch.**
-
-**For Laravel 5.3.* support, pleast look at the [5.3-support](https://github.com/jacquestvanzuydam/laravel-firebird/tree/5.3-support) branch.**
 
 Update the `app/config/app.php`, add the service provider:
 ```json
