@@ -12,10 +12,10 @@
     "minimum-stability": "dev",
     "require": {
       "php": ">=5.4.0",
-      "illuminate/support": "5.0.*",
-      "illuminate/container": "5.0.*",
-      "illuminate/database": "5.0.*",
-      "illuminate/events": "5.0.*"
+      "illuminate/support": "5.3.*",
+ +    "illuminate/container": "5.3.*",
+ +    "illuminate/database": "5.3.*",
+ +    "illuminate/events": "5.3.*"
     },
     "autoload":{
       "psr-0": {
