@@ -20,7 +20,7 @@ class FirebirdConnector extends Connector implements ConnectorInterface {
 
     $path = $config['database'];
 
-    $charset = $config['charset']
+    $charset = $config['charset'];
     
     $host = $config['host'];
     if ( empty($host))
