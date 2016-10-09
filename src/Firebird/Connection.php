@@ -1,156 +1,191 @@
 <?php namespace Firebird;
 
 use PDO;
+use Firebird\Query\Grammars\FirebirdGrammar as QueryGrammar;
+use Firebird\Query\Grammars\FirebirdGrammar30 as QueryGrammar30;
+use Firebird\Query\Builder as QueryBuilder;
 use Firebird\Schema\Grammars\FirebirdGrammar as SchemaGrammar;
+use Firebird\Schema\Builder as SchemaBuilder;
+use Firebird\Query\Processors\FirebirdProcessor as Processor;
 
-class Connection extends \Illuminate\Database\Connection {
+class Connection extends \Illuminate\Database\Connection
+{
 
-  /**
-   * The Firebird database handler.
-   *
-   * @var Firebird
-   */
-  protected $db;
+    /**
+     * Firebird Engine version
+     * 
+     * @var string 
+     */
+    private $engine_version = null;
 
-  /**
-   * The Firebird connection handler.
-   *
-   * @var PDO
-   */
-  protected $connection;
-
-  /**
-   * Create a new database connection instance.
-   *
-   * @param  array $config
-   */
-  public function __construct(PDO $pdo, $database = '', $tablePrefix = '', array $config = array())
-  {
-    $this->pdo = $pdo;
-
-    $this->config = $config;
-
-    // First we will setup the default properties. We keep track of the DB
-    // name we are connected to since it is needed when some reflective
-    // type commands are run such as checking whether a table exists.
-    $this->database = $database;
-
-    $this->tablePrefix = $tablePrefix;
-
-    $this->config = $config;
-
-    // The connection string
-    $dsn = $this->getDsn($config);
-
-    // Create the connection
-    $this->connection = $this->createConnection($dsn, $config);
-
-    // Set the database
-    $this->db = $this->connection;
-
-    // We need to initialize a query grammar and the query post processors
-    // which are both very important parts of the database abstractions
-    // so we initialize these to their default values while starting.
-    $this->useDefaultQueryGrammar();
-
-    $this->useDefaultPostProcessor();
-  }
-  /**
-   * Return the DSN string from configuration
-   *
-   * @param  array   $config
-   * @return string
-   */
-  protected function getDsn(array $config)
-  {
-    // Check that the host and database are not empty
-    if( ! empty($config['host']) && ! empty ($config['database']) )
+    /**
+     * Get engine version
+     * 
+     * @return string
+     */
+    protected function getEngineVersion()
     {
-      return 'firebird:dbname='.$config['host'].':'.$config['database'].';charset='.$config['charset'];
+        if (!$this->engine_version) {
+            $this->engine_version = isset($this->config['engine_version']) ? $this->config['engine_version'] : null;
+        }
+        if (!$this->engine_version) {
+            $sql = "SELECT RDB\$GET_CONTEXT(?, ?) FROM RDB\$DATABASE";
+            $sth = $this->getPdo()->prepare($sql);
+            $sth->execute(['SYSTEM', 'ENGINE_VERSION']);
+            $this->engine_version = $sth->fetchColumn();
+            $sth->closeCursor();
+        }
+        return $this->engine_version;
     }
-    else
+
+    /**
+     * Get major engine version
+     * It allows you to determine the features of the engine.
+     * 
+     * @return int
+     */
+    protected function getMajorEngineVersion()
     {
-      trigger_error( 'Cannot connect to Firebird Database, no host or path supplied' );
+        $version = $this->getEngineVersion();
+        $parts = explode('.', $version);
+        return (int) $parts[0];
     }
-  }
 
-  /**
-   * Create the Firebird Connection
-   *
-   * @param  string  $dsn
-   * @param  array   $config
-   * @return PDO
-   */
-  public function createConnection($dsn, array $config)
-  {
-      //Check the username and password
-      if (!empty($config['username']) && !empty($config['password']))
-      {
-          try {
-              return new PDO($dsn, $config['username'], $config['password']);
-          } catch (PDOException $e) {
-              trigger_error($e->getMessage());
-          }
-      }
-      else
-      {
-          trigger_error('Cannot connect to Firebird Database, no username or password supplied');
-      }
-      return null;
-  }
+    /**
+     * Get the default query grammar instance
+     *
+     * @return Query\Grammars\FirebirdGrammar
+     */
+    protected function getDefaultQueryGrammar()
+    {
+        if ($this->getMajorEngineVersion() >= 3) {
+            return new QueryGrammar30;
+        }
+        return new QueryGrammar;
+    }
 
-  /**
-   * Get the default query grammar instance
-   *
-   * @return Query\Grammars\FirebirdGrammar
-   */
-  protected function getDefaultQueryGrammar()
-  {
-      return new Query\Grammars\FirebirdGrammar;
-  }
+    /**
+     * Get the default post processor instance.
+     *
+     * @return \Firebird\Query\Processors\FirebirdProcessor
+     */
+    protected function getDefaultPostProcessor()
+    {
+        return new Processor;
+    }
 
-  /**
-   * Get the default post processor instance.
-   *
-   * @return Query\Processors\FirebirdProcessor
-   */
-  protected function getDefaultPostProcessor()
-  {
-    return new Query\Processors\FirebirdProcessor;
-  }
+    /**
+     * Get a schema builder instance for this connection.
+     * @return \Firebird\Schema\Builder
+     */
+    public function getSchemaBuilder()
+    {
+        if (is_null($this->schemaGrammar)) {
+            $this->useDefaultSchemaGrammar();
+        }
 
-  /**
-   * Get a schema builder instance for this connection.
-   * @return Schema\Builder
-   */
-  public function getSchemaBuilder()
-  {
-    if (is_null($this->schemaGrammar)) { $this->useDefaultSchemaGrammar(); }
+        return new SchemaBuilder($this);
+    }
 
-    return new Schema\Builder($this);
-  }
+    /**
+     * Get the default schema grammar instance.
+     *
+     * @return \Firebird\Schema\Grammars\FirebirdGrammar
+     */
+    protected function getDefaultSchemaGrammar()
+    {
+        return $this->withTablePrefix(new SchemaGrammar);
+    }
 
-  /**
-   * Get the default schema grammar instance.
-   *
-   * @return SchemaGrammar;
-   */
-  protected function getDefaultSchemaGrammar() {
-    return $this->withTablePrefix(new SchemaGrammar);
-  }
+    /**
+     * Get query builder
+     * 
+     * @return \Firebird\Query\Builder
+     */
+    protected function getQueryBuilder()
+    {
+        $processor = $this->getPostProcessor();
+        $grammar = $this->getQueryGrammar();
 
-  /**
-   * Begin a fluent query against a database table.
-   *
-   * @param  string  $table
-   * @return Firebird\Query\Builder
-   */
-  public function table($table)
-  {
-    $processor = $this->getPostProcessor();
+        return new QueryBuilder($this, $grammar, $processor);
+    }
 
-    $query = new Query\Builder($this, $this->getQueryGrammar(), $processor);
+    /**
+     * Begin a fluent query against a database table.
+     *
+     * @param  string  $table
+     * @return \Firebird\Query\Builder
+     */
+    public function table($table)
+    {
+        $query = $this->getQueryBuilder();
 
-    return $query->from($table);
-  }
+        return $query->from($table);
+    }
+    
+    /**
+     * Execute stored function
+     * 
+     * @param string $function
+     * @param array $values
+     * @return mixed
+     */
+    public function executeFunction($function, array $values = null) {
+        $query = $this->getQueryBuilder();
+
+        return $query->executeFunction($function, $values);       
+    }
+    
+    /**
+     * Execute stored procedure
+     * 
+     * @param string $procedure
+     * @param array $values
+     */
+    public function executeProcedure($procedure, array $values = null) {
+        $query = $this->getQueryBuilder();
+
+        $query->executeProcedure($procedure, $values);        
+    }
+
+    /**
+     * Start a new database transaction.
+     *
+     * @return void
+     * @throws Exception
+     */
+    public function beginTransaction()
+    {
+        if ($this->transactions == 0 && $this->pdo->getAttribute(PDO::ATTR_AUTOCOMMIT) == 1) {
+            $this->pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, 0);
+        }
+        parent::beginTransaction();
+    }
+
+    /**
+     * Commit the active database transaction.
+     *
+     * @return void
+     */
+    public function commit()
+    {
+        parent::commit();
+        if ($this->transactions == 0 && $this->pdo->getAttribute(PDO::ATTR_AUTOCOMMIT) == 0) {
+            $this->pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, 1);
+        }
+    }
+
+    /**
+     * Rollback the active database transaction.
+     *
+     * @return void
+     */
+    public function rollBack()
+    {
+        parent::rollBack();
+        if ($this->transactions == 0 && $this->pdo->getAttribute(PDO::ATTR_AUTOCOMMIT) == 0) {
+            $this->pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, 1);
+        }
+    }
+
 }

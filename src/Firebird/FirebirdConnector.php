@@ -4,31 +4,59 @@ use Doctrine\Instantiator\Exception\InvalidArgumentException;
 use Illuminate\Database\Connectors\Connector;
 use Illuminate\Database\Connectors\ConnectorInterface;
 
-class FirebirdConnector extends Connector implements ConnectorInterface {
+class FirebirdConnector extends Connector implements ConnectorInterface
+{
 
-  /**
-   * Establish a database connection.
-   *
-   * @param  array  $config
-   * @return \PDO
-   *
-   * @throws \InvalidArgumentException
-   */
-  public function connect(array $config)
-  {
-    $options = $this->getOptions($config);
-
-    $path = $config['database'];
-
-    $charset = $config['charset'];
-    
-    $host = $config['host'];
-    if ( empty($host))
+    /**
+     * Establish a database connection.
+     *
+     * @param  array  $config
+     * @return \PDO
+     */
+    public function connect(array $config)
     {
-      throw new InvalidArgumentException("Host not given, required.");
+        $dsn = $this->getDsn($config);
+
+        $options = $this->getOptions($config);
+
+        // We need to grab the PDO options that should be used while making the brand
+        // new connection instance. The PDO options control various aspects of the
+        // connection's behavior, and some might be specified by the developers.
+        $connection = $this->createConnection($dsn, $config, $options);
+
+        return $connection;
     }
 
-    return $this->createConnection("firebird:dbname={$host}:{$path};charset={$charset}", $config, $options);
-  }
+    /**
+     * Create a DSN string from a configuration.
+     *
+     * @param  array   $config
+     * @return string
+     */
+    protected function getDsn(array $config)
+    {
+        $dsn = '';
+        if (isset($config['host'])) {
+            $dsn .= $config['host'];
+        }
+        if (isset($config['port'])) {
+            $dsn .= "/" . $config['port'];
+        }
+        if (!isset($config['database'])) {
+            throw new InvalidArgumentException("Database not given, required.");
+        }
+        if ($dsn)
+            $dsn .= ':';
+        $dsn .= $config['database'] . ';';
+        if (isset($config['charset'])) {
+            $dsn .= "charset=" . $config['charset'];
+        }
+        if (isset($config['role'])) {
+            $dsn .= ";role=" . $config['role'];
+        }
+        $dsn = 'firebird:dbname=' . $dsn;
+
+        return $dsn;
+    }
 
 }
