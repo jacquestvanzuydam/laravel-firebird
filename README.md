@@ -55,7 +55,7 @@ extends its functionality. Tested on Laravel-5.2.
 
 Added the following features:
 
-1. Added support for direct control sequences in 
+* Added support for direct control sequences in 
 
 ```php
         // CREATE SEQUENCE "seq_users_id"
@@ -68,10 +68,10 @@ Added the following features:
         });
 
         // DROP SEQUENCE "seq_users_id"
-        //Schema::dropSequence('seq_users_id');
+        Schema::dropSequence('seq_users_id');
 ```
 
-2. The implementation of auto-increment columns in two ways: through 
+* The implementation of auto-increment columns in two ways: through 
 the automatic generation of sequences and before insert trigger, or using 
 identity fields (only in Firebird 3.0).
 
@@ -133,13 +133,13 @@ Only Firebird 3.0 and above
         });  
 ```     
    
-3. The implementation of InsertGetId method similar to the postgres, ie 
+* The implementation of InsertGetId method similar to the postgres, ie 
 using RETURNING proposal. For Firebird 3.0 found a workaround.
 
-4. Create your own base model class in which insertAndSetId method is 
+* Create your own base model class in which insertAndSetId method is 
 implemented through the prior receipt by the sequence identifier.
 
-5. Added additional methods for the execution of stored procedures and stored functions.
+* Added additional methods for the execution of stored procedures and stored functions.
 
-6. Added Providing the connection parameters: the name of the role and Firebird 
+* Added Providing the connection parameters: the name of the role and Firebird 
 version (to use the correct grammar).
