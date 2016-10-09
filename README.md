@@ -12,7 +12,7 @@ http://mapopa.blogspot.com/2009/04/php5-and-firebird-pdo-on-ubuntu-hardy.html
 
 Install using composer:
 ```json
-composer requires sim1984/laravel-firebird
+composer require sim1984/laravel-firebird
 ```
 
 Update the `app/config/app.php`, add the service provider:
