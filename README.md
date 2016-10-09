@@ -12,7 +12,7 @@ http://mapopa.blogspot.com/2009/04/php5-and-firebird-pdo-on-ubuntu-hardy.html
 
 Install using composer:
 ```json
-composer require sim1984/laravel-firebird
+composer requires sim1984/laravel-firebird
 ```
 
 Update the `app/config/app.php`, add the service provider:
@@ -71,9 +71,8 @@ Added the following features:
         Schema::dropSequence('seq_users_id');
 ```
 
-* The implementation of auto-increment columns in two ways: through 
-the automatic generation of sequences and before insert trigger, or using 
-identity fields (only in Firebird 3.0).
+* The implementation of auto-increment columns in two ways: 
+1. through the automatic generation of sequences and before insert trigger
 
 ```php
         // CREATE TABLE "users" (
@@ -109,7 +108,7 @@ identity fields (only in Firebird 3.0).
         Schema::drop('users');
 ```
 
-Only Firebird 3.0 and above
+2. using identity fields (only in Firebird 3.0).
 
 ```php
         // CREATE TABLE "users" (
@@ -133,8 +132,9 @@ Only Firebird 3.0 and above
         });  
 ```     
    
-* The implementation of InsertGetId method similar to the postgres, ie 
-using RETURNING proposal. For Firebird 3.0 found a workaround.
+* The implementation of InsertGetId method is similar to the postgres, ie 
+using RETURNING proposal. For Firebird 3.0 workaround was implemented 
+(see bug https://bugs.php.net/bug.php?id=72931).
 
 * Create your own base model class in which insertAndSetId method is 
 implemented through the prior receipt by the sequence identifier.
