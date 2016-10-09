@@ -2,7 +2,7 @@
     "name": "sim1984/laravel-firebird",
     "description": "A Firebird database package for the Laravel Framework",
     "license": "MIT",
-    "version": "1.0.0.1",
+	"minimum-stability": "dev",
     "authors": [
         {
             "name": "Jacques van Zuydam",
@@ -21,7 +21,7 @@
       "illuminate/events": "5.2.*"
     },
     "autoload":{
-      "psr-0": {
+      "psr-4": {
         "Firebird\\": "src/"
       }
     }
