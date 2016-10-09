@@ -13,7 +13,7 @@
             "email": "sim-mail@list.ru"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "alpha",
     "prefer-stable": true,
     "require": {
       "php": ">=5.4.0",
