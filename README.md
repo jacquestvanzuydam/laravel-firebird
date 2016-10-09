@@ -72,7 +72,7 @@ Added the following features:
 ```
 
 * The implementation of auto-increment columns in two ways: 
-1. through the automatic generation of sequences and before insert trigger
+- through the automatic generation of sequences and before insert trigger
 
 ```php
         // CREATE TABLE "users" (
@@ -108,7 +108,7 @@ Added the following features:
         Schema::drop('users');
 ```
 
-2. using identity fields (only in Firebird 3.0).
+- using identity fields (only in Firebird 3.0).
 
 ```php
         // CREATE TABLE "users" (
