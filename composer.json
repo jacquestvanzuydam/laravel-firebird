@@ -11,11 +11,11 @@
     ],
     "minimum-stability": "dev",
     "require": {
-      "php": ">=5.4.0",
-      "illuminate/support": "5.3.*",
-      "illuminate/container": "5.3.*",
-      "illuminate/database": "5.3.*",
-      "illuminate/events": "5.3.*"
+      "php": ">=5.6.4",
+      "illuminate/support": "~5.4",
+      "illuminate/container": "~5.4",
+      "illuminate/database": "~5.4",
+      "illuminate/events": "~5.4"
     },
     "autoload":{
       "psr-0": {
