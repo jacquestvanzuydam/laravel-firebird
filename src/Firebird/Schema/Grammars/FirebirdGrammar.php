@@ -31,7 +31,16 @@ class FirebirdGrammar extends Grammar {
     return "SELECT RDB\$RELATION_NAME FROM RDB\$RELATIONS WHERE RDB\$RELATION_NAME = ?";
   }
 
-  /**
+    /**
+     * Compile the query to determine the list of columns.
+     *
+     * @return string
+     */
+    public function compileColumnListing($table) {
+	return "SELECT RDB\$FIELD_NAME FROM RDB\$RELATION_FIELDS WHERE RDB\$RELATION_NAME = '$table'";
+    }
+
+    /**
    * Compile a create table command.
    *
    * @param  \Illuminate\Database\Schema\Blueprint  $blueprint
