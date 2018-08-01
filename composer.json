@@ -4,6 +4,10 @@
     "license": "MIT",
     "version": "1.0.0.0",
     "authors": [
+         {
+            "name": "Jacques van Zuydam",
+            "email": "jtvanzuydam@gmail.com"
+         },
         {
             "name": "Fernando Couto",
             "email": "jfscouto@gmail.com"
