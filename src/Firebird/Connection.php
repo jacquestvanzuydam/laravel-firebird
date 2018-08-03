@@ -24,7 +24,7 @@ class Connection extends \Illuminate\Database\Connection {
    *
    * @param  array $config
    */
-  public function __construct($pdo, $database = '', $tablePrefix = '', array $config = array())
+  public function __construct(PDO $pdo, $database = '', $tablePrefix = '', array $config = array())
   {
     $this->pdo = $pdo;
 
