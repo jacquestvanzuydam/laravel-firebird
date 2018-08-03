@@ -73,7 +73,7 @@ class ConnectionFactory extends BaseConnectionFactory {
    *
    * @throws \InvalidArgumentException
    */
-  protected function createConnection($driver, $connection, $database, $prefix = '', array $config = array())
+  protected function createConnection($driver, PDO $connection, $database, $prefix = '', array $config = array())
   {
     if ($this->container->bound($key = "db.connection.{$driver}"))
     {
