@@ -12,7 +12,7 @@ http://mapopa.blogspot.com/2009/04/php5-and-firebird-pdo-on-ubuntu-hardy.html
 
 Install using composer:
 ```json
-composer require jacquestvanzuydam/laravel-firebird
+composer require fesoft/laravel-firebird
 ```
 
 **For Laravel 5.1.* support, please look at the [5.1-support](https://github.com/jacquestvanzuydam/laravel-firebird/tree/5.1-support) branch.**
@@ -25,10 +25,9 @@ composer require jacquestvanzuydam/laravel-firebird
 
 **For Laravel 5.5.* support, please look at the [5.5-support](https://github.com/jacquestvanzuydam/laravel-firebird/tree/5.4-support) branch.**
 
-
 Update the `app/config/app.php`, add the service provider:
 ```json
-'Firebird\FirebirdServiceProvider'.
+Firebird\FirebirdServiceProvider::class
 ```
 
 You can remove the original DatabaseServiceProvider, as the original connection factory has also been extended.
@@ -44,6 +43,8 @@ Other keys that are needed:
     'username' => env('DB_USERNAME', 'sysdba'),
     'password' => env('DB_PASSWORD', 'masterkey'),
     'charset'  => env('DB_CHARSET', 'UTF8'),
+    'role'     => 'RDB$ADMIN',
+    'engine_version' => '3.0.1',
 ],
 ```
 
