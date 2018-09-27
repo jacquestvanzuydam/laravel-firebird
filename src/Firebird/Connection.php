@@ -153,4 +153,28 @@ class Connection extends \Illuminate\Database\Connection {
 
     return $query->from($table);
   }
+
+  public function beginTransaction()
+  {
+    if ( $this->transactions == 0 && $this->pdo->getAttribute(PDO::ATTR_AUTOCOMMIT) == 1 ) {
+      $this->pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, 0);
+    }
+    parent::beginTransaction();
+  }
+ 
+  public function commit()
+  {
+    parent::commit();
+    if ( $this->transactions == 0 && $this->pdo->getAttribute(PDO::ATTR_AUTOCOMMIT) == 0 ) {
+      $this->pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, 1);
+    }
+  }
+ 
+  public function rollBack()
+  {
+    parent::rollBack();
+    if ( $this->transactions == 0 && $this->pdo->getAttribute(PDO::ATTR_AUTOCOMMIT) == 0 ) {
+      $this->pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, 1);
+    }
+  }
 }
