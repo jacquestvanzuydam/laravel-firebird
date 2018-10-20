@@ -23,7 +23,7 @@ Update the `app/config/app.php`, add the service provider:
 'Firebird\FirebirdServiceProvider'.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-For Laravel 5.1:
+For Laravel 5.1 and later:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ php
 Firebird\FirebirdServiceProvider::class,
