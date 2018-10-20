@@ -8,7 +8,7 @@ Installation
 
 Install the Firebird PDO driver for PHP.
 
-Mariuz's Blog has a very good step by step on this:
+Mariuz's Blog has a very good step by step on this: 
 http://mapopa.blogspot.com/2009/04/php5-and-firebird-pdo-on-ubuntu-hardy.html
 
 Install using composer:
