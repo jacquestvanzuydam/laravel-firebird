@@ -11,7 +11,7 @@
         {
             "name": "Simonov Denis",
             "email": "sim-mail@list.ru"
-        }		
+        }
     ],
     "prefer-stable": true,
     "minimum-stability": "dev",
