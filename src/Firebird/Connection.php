@@ -106,22 +106,19 @@ class Connection extends \Illuminate\Database\Connection
     {
         $processor = $this->getPostProcessor();
         $grammar = $this->getQueryGrammar();
-
+  
         return new QueryBuilder($this, $grammar, $processor);
     }
-
+    
     /**
-     * Begin a fluent query against a database table.
+     * Get a new query builder instance.
      *
-     * @param  string  $table
      * @return \Firebird\Query\Builder
      */
-    public function table($table)
+    public function query()
     {
-        $query = $this->getQueryBuilder();
-
-        return $query->from($table);
-    }
+        return $this->getQueryBuilder();
+    }    
     
     /**
      * Execute stored function
@@ -178,11 +175,12 @@ class Connection extends \Illuminate\Database\Connection
     /**
      * Rollback the active database transaction.
      *
+     * @param  int|null  $toLevel
      * @return void
      */
-    public function rollBack()
+    public function rollBack($toLevel = null)
     {
-        parent::rollBack();
+        parent::rollBack($toLevel);
         if ($this->transactions == 0 && $this->pdo->getAttribute(PDO::ATTR_AUTOCOMMIT) == 0) {
             $this->pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, 1);
         }

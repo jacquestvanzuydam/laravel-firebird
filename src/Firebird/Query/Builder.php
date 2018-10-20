@@ -4,9 +4,9 @@ use Illuminate\Database\Query\Builder as BaseBuilder;
 
 class Builder extends BaseBuilder
 {
-
+      
     /**
-     * Getcontext variable value
+     * Get context variable value
      * 
      * @param string $namespace
      * @param string $name

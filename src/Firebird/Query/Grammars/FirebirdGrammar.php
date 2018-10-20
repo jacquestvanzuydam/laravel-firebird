@@ -16,6 +16,27 @@ class FirebirdGrammar extends Grammar
         'like', 'not like', 'between', 'containing', 'starting with',
         'similar to', 'not similar to',
     ];
+    
+    /**
+     * Compile an aggregated select clause.
+     *
+     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param  array  $aggregate
+     * @return string
+     */
+    protected function compileAggregate(Builder $query, $aggregate)
+    {
+        $column = $this->columnize($aggregate['columns']);
+
+        // If the query has a "distinct" constraint and we're not asking for all columns
+        // we need to prepend "distinct" onto the column name so that the query takes
+        // it into account when it performs the aggregating operations on the data.
+        if ($query->distinct && $column !== '*') {
+            $column = 'distinct '.$column;
+        }
+
+        return 'select '.$aggregate['function'].'('.$column.') as "aggregate"';
+    }    
 
     /**
      * Compile SQL statement for get context variable value

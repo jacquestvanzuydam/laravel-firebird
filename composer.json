@@ -13,14 +13,14 @@
             "email": "sim-mail@list.ru"
         }		
     ],
-	"prefer-stable": true,
+    "prefer-stable": true,
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.5.0",
-        "illuminate/support": "5.2.*",
-        "illuminate/container": "5.2.*",
-        "illuminate/database": "5.2.*",
-        "illuminate/events": "5.2.*"
+        "php": ">=7.0.0",
+        "illuminate/support": "5.5.*",
+        "illuminate/container": "5.5.*",
+        "illuminate/database": "5.5.*",
+        "illuminate/events": "5.5.*"
     },
     "autoload":{
         "psr-0": {

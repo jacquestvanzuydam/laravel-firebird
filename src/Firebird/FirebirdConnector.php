@@ -45,8 +45,9 @@ class FirebirdConnector extends Connector implements ConnectorInterface
         if (!isset($config['database'])) {
             throw new InvalidArgumentException("Database not given, required.");
         }
-        if ($dsn)
+        if ($dsn) {
             $dsn .= ':';
+        }
         $dsn .= $config['database'] . ';';
         if (isset($config['charset'])) {
             $dsn .= "charset=" . $config['charset'];
