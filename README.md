@@ -23,7 +23,7 @@ composer require jacquestvanzuydam/laravel-firebird
 
 **For Laravel 5.4.* support, please look at the [5.4-support](https://github.com/jacquestvanzuydam/laravel-firebird/tree/5.4-support) branch.**
 
-**For Laravel 5.5.* support, please look at the [5.5-support](https://github.com/jacquestvanzuydam/laravel-firebird/tree/5.4-support) branch.**
+**For Laravel 5.5.* support, please look at the [5.5-support](https://github.com/jacquestvanzuydam/laravel-firebird/tree/5.5-support) branch.**
 =======
 
 Update the `app/config/app.php`, add the service provider:
