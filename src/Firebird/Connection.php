@@ -24,7 +24,7 @@ class Connection extends \Illuminate\Database\Connection {
    *
    * @param  array $config
    */
-  public function __construct(PDO $pdo, $database = '', $tablePrefix = '', array $config = array())
+  public function __construct($pdo, $database = '', $tablePrefix = '', array $config = array())
   {
     $this->pdo = $pdo;
 
@@ -66,7 +66,7 @@ class Connection extends \Illuminate\Database\Connection {
     // Check that the host and database are not empty
     if( ! empty($config['host']) && ! empty ($config['database']) )
     {
-      return 'firebird:dbname='.$config['host'].':'.$config['database'].';charset='.$config['charset'];
+		return 'firebird:dbname='.$config['host'].':'.$config['database'].";role=".$config['role'].';charset='.$config['charset'];
     }
     else
     {
@@ -87,7 +87,7 @@ class Connection extends \Illuminate\Database\Connection {
       if (!empty($config['username']) && !empty($config['password']))
       {
           try {
-              return new PDO($dsn, $config['username'], $config['password']);
+			  return new PDO($dsn, $config['username'], $config['password']);
           } catch (PDOException $e) {
               trigger_error($e->getMessage());
           }
