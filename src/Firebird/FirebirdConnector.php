@@ -31,7 +31,7 @@ class FirebirdConnector extends Connector implements ConnectorInterface {
       throw new InvalidArgumentException("Host not given, required.");
     }
 
-	return $this->createConnection("firebird:dbname={$host}:{$path};charset={$charset};role={$role}", $config, $options);
+    return $this->createConnection("firebird:dbname={$host}:{$path};charset={$charset};role={$role}", $config, $options);
   }
 
 }
