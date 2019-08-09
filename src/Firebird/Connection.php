@@ -1,26 +1,28 @@
-<?php namespace Firebird;
+<?php
 
-use PDO;
-use Firebird\Query\Grammars\FirebirdGrammar as QueryGrammar;
-use Firebird\Query\Grammars\FirebirdGrammar30 as QueryGrammar30;
+namespace Firebird;
+
 use Firebird\Query\Builder as QueryBuilder;
-use Firebird\Schema\Grammars\FirebirdGrammar as SchemaGrammar;
-use Firebird\Schema\Builder as SchemaBuilder;
+use Firebird\Query\Grammars\Firebird25Grammar as QueryGrammar;
+use Firebird\Query\Grammars\Firebird30Grammar as QueryGrammar30;
 use Firebird\Query\Processors\FirebirdProcessor as Processor;
+use Firebird\Schema\Builder as SchemaBuilder;
+use Firebird\Schema\Grammars\FirebirdGrammar as SchemaGrammar;
+use PDO;
 
 class Connection extends \Illuminate\Database\Connection
 {
 
     /**
      * Firebird Engine version
-     * 
-     * @var string 
+     *
+     * @var string
      */
     private $engine_version = null;
 
     /**
      * Get engine version
-     * 
+     *
      * @return string
      */
     protected function getEngineVersion()
@@ -41,20 +43,20 @@ class Connection extends \Illuminate\Database\Connection
     /**
      * Get major engine version
      * It allows you to determine the features of the engine.
-     * 
+     *
      * @return int
      */
     protected function getMajorEngineVersion()
     {
         $version = $this->getEngineVersion();
         $parts = explode('.', $version);
-        return (int) $parts[0];
+        return (int)$parts[0];
     }
 
     /**
      * Get the default query grammar instance
      *
-     * @return Query\Grammars\FirebirdGrammar
+     * @return Query\Grammars\Firebird25Grammar
      */
     protected function getDefaultQueryGrammar()
     {
@@ -76,6 +78,7 @@ class Connection extends \Illuminate\Database\Connection
 
     /**
      * Get a schema builder instance for this connection.
+     *
      * @return \Firebird\Schema\Builder
      */
     public function getSchemaBuilder()
@@ -90,7 +93,7 @@ class Connection extends \Illuminate\Database\Connection
     /**
      * Get the default schema grammar instance.
      *
-     * @return \Firebird\Schema\Grammars\FirebirdGrammar
+     * @return \Illuminate\Database\Grammar
      */
     protected function getDefaultSchemaGrammar()
     {
@@ -99,17 +102,17 @@ class Connection extends \Illuminate\Database\Connection
 
     /**
      * Get query builder
-     * 
+     *
      * @return \Firebird\Query\Builder
      */
     protected function getQueryBuilder()
     {
         $processor = $this->getPostProcessor();
         $grammar = $this->getQueryGrammar();
-  
+
         return new QueryBuilder($this, $grammar, $processor);
     }
-    
+
     /**
      * Get a new query builder instance.
      *
@@ -118,38 +121,40 @@ class Connection extends \Illuminate\Database\Connection
     public function query()
     {
         return $this->getQueryBuilder();
-    }    
-    
+    }
+
     /**
      * Execute stored function
-     * 
+     *
      * @param string $function
      * @param array $values
      * @return mixed
      */
-    public function executeFunction($function, array $values = null) {
+    public function executeFunction($function, array $values = null)
+    {
         $query = $this->getQueryBuilder();
 
-        return $query->executeFunction($function, $values);       
+        return $query->executeFunction($function, $values);
     }
-    
+
     /**
      * Execute stored procedure
-     * 
+     *
      * @param string $procedure
      * @param array $values
      */
-    public function executeProcedure($procedure, array $values = null) {
+    public function executeProcedure($procedure, array $values = null)
+    {
         $query = $this->getQueryBuilder();
 
-        $query->executeProcedure($procedure, $values);        
+        $query->executeProcedure($procedure, $values);
     }
 
     /**
      * Start a new database transaction.
      *
      * @return void
-     * @throws Exception
+     * @throws \Exception
      */
     public function beginTransaction()
     {
@@ -175,8 +180,9 @@ class Connection extends \Illuminate\Database\Connection
     /**
      * Rollback the active database transaction.
      *
-     * @param  int|null  $toLevel
+     * @param int|null $toLevel
      * @return void
+     * @throws \Exception
      */
     public function rollBack($toLevel = null)
     {

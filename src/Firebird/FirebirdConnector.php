@@ -1,8 +1,11 @@
-<?php namespace Firebird;
+<?php
+
+namespace Firebird;
 
 use Doctrine\Instantiator\Exception\InvalidArgumentException;
 use Illuminate\Database\Connectors\Connector;
 use Illuminate\Database\Connectors\ConnectorInterface;
+use PDO;
 
 class FirebirdConnector extends Connector implements ConnectorInterface
 {
@@ -10,8 +13,8 @@ class FirebirdConnector extends Connector implements ConnectorInterface
     /**
      * Establish a database connection.
      *
-     * @param  array  $config
-     * @return \PDO
+     * @param array $config
+     * @return PDO
      */
     public function connect(array $config)
     {
@@ -30,7 +33,7 @@ class FirebirdConnector extends Connector implements ConnectorInterface
     /**
      * Create a DSN string from a configuration.
      *
-     * @param  array   $config
+     * @param array $config
      * @return string
      */
     protected function getDsn(array $config)

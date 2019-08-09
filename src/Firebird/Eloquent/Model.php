@@ -1,7 +1,9 @@
-<?php namespace Firebird\Eloquent;
+<?php
 
-use Illuminate\Database\Eloquent\Model as BaseModel;
+namespace Firebird\Eloquent;
+
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model as BaseModel;
 
 class Model extends BaseModel
 {
@@ -15,7 +17,7 @@ class Model extends BaseModel
 
     /**
      * Get sequence name
-     * 
+     *
      * @return string
      */
     protected function getSequence()
@@ -27,8 +29,8 @@ class Model extends BaseModel
     /**
      * Get next sequence value
      *
-     * @param  string $sequence
-     * 
+     * @param string $sequence
+     *
      * @return int
      */
     protected function nextSequenceValue($sequence = null)
@@ -43,8 +45,8 @@ class Model extends BaseModel
     /**
      * Insert the given attributes and set the ID on the model.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  array  $attributes
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param array $attributes
      * @return void
      */
     protected function insertAndSetId(Builder $query, $attributes)

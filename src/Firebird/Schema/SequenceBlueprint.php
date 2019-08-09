@@ -1,9 +1,11 @@
-<?php namespace Firebird\Schema;
+<?php
+
+namespace Firebird\Schema;
 
 use Closure;
-use Illuminate\Support\Fluent;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Schema\Grammars\Grammar;
+use Illuminate\Support\Fluent;
 
 class SequenceBlueprint
 {
@@ -24,30 +26,30 @@ class SequenceBlueprint
 
     /**
      * Initial sequence value
-     * 
-     * @var int 
+     *
+     * @var int
      */
     protected $start_with = 0;
 
     /**
      * Increment for sequence
-     * 
-     * @var int 
+     *
+     * @var int
      */
     protected $increment = 1;
 
     /**
      * Restart flag that indicates that the sequence should be reset
-     * 
-     * @var bool 
+     *
+     * @var bool
      */
     protected $restart = false;
 
     /**
      * Create a new schema blueprint.
      *
-     * @param  string  $sequence
-     * @param  \Closure|null  $callback
+     * @param string $sequence
+     * @param \Closure|null $callback
      * @return void
      */
     public function __construct($sequence, Closure $callback = null)
@@ -62,8 +64,8 @@ class SequenceBlueprint
     /**
      * Execute the blueprint against the database.
      *
-     * @param  \Illuminate\Database\Connection  $connection
-     * @param  \Illuminate\Database\Schema\Grammars\Grammar $grammar
+     * @param \Illuminate\Database\Connection $connection
+     * @param \Illuminate\Database\Schema\Grammars\Grammar $grammar
      * @return void
      */
     public function build(Connection $connection, Grammar $grammar)
@@ -141,8 +143,8 @@ class SequenceBlueprint
     /**
      * Add a new command to the blueprint.
      *
-     * @param  string  $name
-     * @param  array  $parameters
+     * @param string $name
+     * @param array $parameters
      * @return \Illuminate\Support\Fluent
      */
     protected function addCommand($name, array $parameters = [])
@@ -155,8 +157,8 @@ class SequenceBlueprint
     /**
      * Create a new Fluent command.
      *
-     * @param  string  $name
-     * @param  array   $parameters
+     * @param string $name
+     * @param array $parameters
      * @return \Illuminate\Support\Fluent
      */
     protected function createCommand($name, array $parameters = [])
@@ -176,7 +178,7 @@ class SequenceBlueprint
 
     /**
      * Get increment for the sequence
-     * 
+     *
      * @return int
      */
     public function getIncrement()
@@ -186,7 +188,7 @@ class SequenceBlueprint
 
     /**
      * Get initial value for the sequence
-     * 
+     *
      * @return int
      */
     public function getInitialValue()
@@ -206,7 +208,7 @@ class SequenceBlueprint
 
     /**
      * Set the sequence increment
-     * 
+     *
      * @param int $increment
      */
     public function increment($increment)
@@ -216,7 +218,7 @@ class SequenceBlueprint
 
     /**
      * Get the sequence restart flag
-     * 
+     *
      * @return bool
      */
     public function isRestart()
@@ -226,7 +228,7 @@ class SequenceBlueprint
 
     /**
      * Set initial value for the sequence
-     * 
+     *
      * @param int $startWith
      */
     public function startWith($startWith)
@@ -236,7 +238,7 @@ class SequenceBlueprint
 
     /**
      * Restart sequence and set initial value
-     * 
+     *
      * @param int $startWith
      */
     public function restart($startWith = null)
@@ -253,8 +255,8 @@ class SequenceBlueprint
     protected function addImpliedCommands()
     {
         if (($this->restart || ($this->increment !== 1)) &&
-                !$this->creating() &&
-                !$this->dropping()) {
+            !$this->creating() &&
+            !$this->dropping()) {
             array_unshift($this->commands, $this->createCommand('alterSequence'));
         }
     }
@@ -262,8 +264,8 @@ class SequenceBlueprint
     /**
      * Get the raw SQL statements for the blueprint.
      *
-     * @param  \Illuminate\Database\Connection  $connection
-     * @param  \Illuminate\Database\Schema\Grammars\Grammar  $grammar
+     * @param \Illuminate\Database\Connection $connection
+     * @param \Illuminate\Database\Schema\Grammars\Grammar $grammar
      * @return array
      */
     public function toSql(Connection $connection, Grammar $grammar)
@@ -280,7 +282,7 @@ class SequenceBlueprint
 
             if (method_exists($grammar, $method)) {
                 if (!is_null($sql = $grammar->$method($this, $command, $connection))) {
-                    $statements = array_merge($statements, (array) $sql);
+                    $statements = array_merge($statements, (array)$sql);
                 }
             }
         }

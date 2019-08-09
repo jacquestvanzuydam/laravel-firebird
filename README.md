@@ -23,7 +23,7 @@ Update the `app/config/app.php`, add the service provider:
 'Firebird\FirebirdServiceProvider'.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-For Laravel 5.1 and later:
+For Laravel 5.7 and later:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ php
 Firebird\FirebirdServiceProvider::class,
@@ -44,7 +44,7 @@ connecion type. Other keys that are needed:
     'password' => env('DB_PASSWORD', 'masterkey'),
     'charset'  => env('DB_CHARSET', 'UTF8'),
     'role'     => 'RDB$ADMIN',
-    'engine_version' => '3.0.1',
+    'engine_version' => '3.0.4',
 ],
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -57,7 +57,7 @@ DB_CHARSET=UTF8
 If necessary, change the UTF8 to any other charset
 
 This package is a branch jacquestvanzuydam/laravel-firebird package and extends
-its functionality. Tested on Laravel-5.5.
+its functionality. Tested on Laravel-5.7.
 
 Added the following features:
 

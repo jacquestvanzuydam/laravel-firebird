@@ -1,9 +1,10 @@
-<?php namespace Firebird;
+<?php
 
-use Illuminate\Support\ServiceProvider;
+namespace Firebird;
+
 use Firebird\Connection as FirebirdConnection;
-use Firebird\FirebirdConnector;
 use Illuminate\Database\Connection;
+use Illuminate\Support\ServiceProvider;
 
 class FirebirdServiceProvider extends ServiceProvider
 {
@@ -16,10 +17,10 @@ class FirebirdServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        Connection::resolverFor('firebird', function($connection, $database, $tablePrefix, $config) {
-           return new FirebirdConnection($connection, $database, $tablePrefix, $config); 
-        });        
+        Connection::resolverFor('firebird', function ($connection, $database, $tablePrefix, $config) {
+            return new FirebirdConnection($connection, $database, $tablePrefix, $config);
+        });
         $this->app->bind('db.connector.firebird', FirebirdConnector::class);
     }
-    
+
 }
