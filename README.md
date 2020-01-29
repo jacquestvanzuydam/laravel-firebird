@@ -1,60 +1,15 @@
 # laravel-firebird
 
-To use this package:
+# Please Note:
 
-Installation
-------------
+This package has been abandoned by it's creator, when I created it there were no other decent laravel packages around and I needed it for one specific project. That project has since migrated and this driver was no longer necessary. 
+My initial feeling was that the community would take it up and use my work as a base, which has happened if you look at the many forks that have been created. I trully wish I had more time to devote to this, as it was a passion project for a while.
 
-Install the Firebird PDO driver for PHP.
+## Recommended forks of this project include:
 
-Mariuz's Blog has a very good step by step on this:
-http://mapopa.blogspot.com/2009/04/php5-and-firebird-pdo-on-ubuntu-hardy.html
+* https://packagist.org/packages/harrygulliford/laravel-firebird
+* https://github.com/KKSzymanowski/laravel-6-firebird
 
-Install using composer:
-```json
-composer require jacquestvanzuydam/laravel-firebird
-```
+Thanks to all of you who have downloaded and found this package useful.
 
-**For Laravel 5.1.* support, please look at the [5.1-support](https://github.com/jacquestvanzuydam/laravel-firebird/tree/5.1-support) branch.**
-
-**For Laravel 5.2.* support, please look at the [5.2-sup](https://github.com/jacquestvanzuydam/laravel-firebird/tree/5.2-sup) branch.**
-
-**For Laravel 5.3.* support, please look at the [5.3-support](https://github.com/jacquestvanzuydam/laravel-firebird/tree/5.3-support) branch.**
-
-**For Laravel 5.4.* support, please look at the [5.4-support](https://github.com/jacquestvanzuydam/laravel-firebird/tree/5.4-support) branch.**
-
-**For Laravel 5.5.* support, please look at the [5.5-support](https://github.com/jacquestvanzuydam/laravel-firebird/tree/5.5-support) branch.**
-=======
-
-Update the `app/config/app.php`, add the service provider:
-```json
-'Firebird\FirebirdServiceProvider::class'.
-```
-
-You can remove the original DatabaseServiceProvider, as the original connection factory has also been extended.
-
-Declare your connection in the database config, using 'firebird' as the
-connecion type.
-Other keys that are needed:
-```php
-'firebird' => [
-    'driver'   => 'firebird',
-    'host'     => env('DB_HOST', 'localhost'),
-    'database' => env('DB_DATABASE','/storage/firebird/APPLICATION.FDB'),
-    'username' => env('DB_USERNAME', 'sysdba'),
-    'password' => env('DB_PASSWORD', 'masterkey'),
-    'charset'  => env('DB_CHARSET', 'UTF8'),
-],
-```
-
-And add to your .env
-```
-DB_CHARSET=UTF8
-```
-
-If necessary, change the UTF8 to any other charset
-
-This package is still in it's infancy and I wouldn't yet recommend using
-it for large projects, or without backing up your database regularly.
-
-Any comments or contributions are welcome.
+Jacques.
