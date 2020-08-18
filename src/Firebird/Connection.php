@@ -3,7 +3,8 @@
 namespace Firebird;
 
 use Firebird\Query\Builder as QueryBuilder;
-use Firebird\Query\Grammars\Firebird25Grammar as QueryGrammar;
+use Firebird\Query\Grammars\Firebird15Grammar as QueryGrammar10;
+use Firebird\Query\Grammars\Firebird25Grammar as QueryGrammar20;
 use Firebird\Query\Grammars\Firebird30Grammar as QueryGrammar30;
 use Firebird\Query\Processors\FirebirdProcessor as Processor;
 use Firebird\Schema\Builder as SchemaBuilder;
@@ -56,14 +57,21 @@ class Connection extends \Illuminate\Database\Connection
     /**
      * Get the default query grammar instance
      *
-     * @return Query\Grammars\Firebird25Grammar
+     * @return QueryGrammar10|QueryGrammar20|QueryGrammar30
      */
     protected function getDefaultQueryGrammar()
     {
-        if ($this->getMajorEngineVersion() >= 3) {
-            return new QueryGrammar30;
+        switch ($this->getMajorEngineVersion()){
+            case 1:
+                return new QueryGrammar10;
+                break;
+            case 3:
+                return new QueryGrammar30;
+                break;
+            default:
+                return new QueryGrammar20;
+                break;
         }
-        return new QueryGrammar;
     }
 
     /**
